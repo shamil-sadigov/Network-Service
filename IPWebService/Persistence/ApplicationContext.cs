@@ -9,5 +9,9 @@ namespace IPWebService.Persistence
     public class ApplicationContext:DbContext
     {
 
+        public ApplicationContext()
+        {
+
+        }
     }
 }

@@ -31,16 +31,22 @@ namespace IPWebService
             services.AddHttpClient<IGeoliteClient, GeoliteClient>
                 (ops => ops.BaseAddress = options.Uri);
 
-            services.AddDbContext<ApplicationContext>(ops => ops = null);
 
 
             #endregion
+
+            //services.AddDbContext<ApplicationContext>(ops => ops = null);
+
+
+            services.AddTransient<IConnectionStringBuilder, PostgreConnStringBuilder>();
+            services.AddTransient<IConnectionStringManager, PostgreConnStringManager>();
 
 
             // you may initialize your serlf injecting necessary dependencies later
             services.AddHostedService<GeoliteHostedService>();
 
-
+            services.Configure<AppDbOptions>(dbOps =>
+                Configuration.GetSection("DbOptions:Postgre").Bind(dbOps));
 
             services.AddControllers();
         }

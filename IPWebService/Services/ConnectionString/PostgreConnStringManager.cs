@@ -1,29 +1,42 @@
 ﻿using IPWebService.Persistence;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
+using static IPWebService.Helpers.Guard;
 
 namespace IPWebService.Services
 {
     public sealed class PostgreConnStringManager : IConnectionStringManager
     {
         private readonly IConfiguration configuration;
+        private readonly IConnectionStringBuilder connectionStringBuilder;
 
-        public PostgreConnStringManager(IConfiguration configuration)
+        public PostgreConnStringManager(IConfiguration configuration,
+                                        IConnectionStringBuilder connectionStringBuilder)
         {
             this.configuration = configuration;
+            this.connectionStringBuilder = connectionStringBuilder;
         }
 
         public string CurrentConnectionString =>
             configuration.GetConnectionString("Postgre");
 
-        public string NewConnectionString(IConnectionStringBuilder connectionBuilder)
+        public string NewConnectionString(AppDbOptions ops)
         {
-            var options = configuration.GetSection("DbOptions:Postgre").Get<AppDbOptions>();
-            return connectionBuilder.Build(options, dbName: $"Geolite_{DateTime.Now}");
+            if (ops.IsNull())
+                NullArgument.Throw(argument: nameof(AppDbOptions));
+
+            return connectionStringBuilder.Build(ops, $"Geolite_{DateTime.Now.Ticks}");
         }
 
+
         public void SetConnectionString(string connectionString)
-            => configuration["ConnectionStrings:Postgre"] = connectionString;
-        
+        {
+            if (string.IsNullOrEmpty(connectionString))
+                NullArgument.Throw(argument: nameof(AppDbOptions));
+
+            configuration["ConnectionStrings:Postgre"] = connectionString;
+        }
+
     }
 }

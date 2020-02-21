@@ -10,6 +10,12 @@ namespace IPWebService.Persistence
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Host { get; set; }
-        public byte Port { get; set; }
+        public short Port { get; set; }
+
+        public bool IsNull()
+            => string.IsNullOrEmpty(UserName)
+            || string.IsNullOrEmpty(Password)
+            || string.IsNullOrEmpty(Host)
+            || Port <= 0;
     }
 }

@@ -20,7 +20,12 @@ namespace IPWebService
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(builder =>
                 {
-                    builder.AddInMemoryCollection();
+                    var memoryCollection = new Dictionary<string, string>()
+                    {
+                        {"ConnectionStrings:Postgre", null}
+                    };
+
+                    builder.AddInMemoryCollection(memoryCollection);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
