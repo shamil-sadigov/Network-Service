@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IPWebService.Options
 {
-    public class GeoliteOptions
+    public class GeoliteUrlOptions
     {
         public string Scheme { get; set; }
         public string Host { get; set; }
@@ -27,5 +27,8 @@ namespace IPWebService.Options
             }
         }
         
+
+
+
     }
 }

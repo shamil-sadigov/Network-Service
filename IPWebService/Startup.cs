@@ -24,14 +24,11 @@ namespace IPWebService
         {
             #region Configure GeoliteClient
 
-            
-            GeoliteOptions options = Configuration.GetSection(nameof(GeoliteOptions))
-                                         .Get<GeoliteOptions>();
+         
+            services.AddHttpClient<IGeoliteClient, GeoliteClient>();
 
-            services.AddHttpClient<IGeoliteClient, GeoliteClient>
-                (ops => ops.BaseAddress = options.Uri);
-
-
+            services.Configure<GeoliteUrlOptions>(dbOps =>
+                Configuration.GetSection("GeoliteUrlOptions").Bind(dbOps));
 
             #endregion
 
@@ -40,7 +37,6 @@ namespace IPWebService
 
             services.AddTransient<IConnectionStringBuilder, PostgreConnStringBuilder>();
             services.AddTransient<IConnectionStringManager, PostgreConnStringManager>();
-
 
             // you may initialize your serlf injecting necessary dependencies later
             services.AddHostedService<GeoliteHostedService>();
