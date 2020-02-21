@@ -32,4 +32,3 @@ C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
-C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.MvcApplicationPartsAssemblyInfo.cache

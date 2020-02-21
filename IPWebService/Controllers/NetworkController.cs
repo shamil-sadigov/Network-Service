@@ -16,7 +16,7 @@ namespace IPWebService.Controllers
     [Route("api/[controller]")]
     public class NetworkController : Controller
     {
-        public NetworkController(IGeoliteClient geoliteClient)
+        public NetworkController(IGeoliteHttpClient geoliteClient)
         {
             Console.WriteLine("Network Controller" + Thread.CurrentThread.ManagedThreadId);
         }

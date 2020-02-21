@@ -1,4 +1,5 @@
 ﻿using IPWebService.Options;
+using IPWebService.Services.Geolite;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using System.IO;
@@ -8,14 +9,14 @@ using static IPWebService.Helpers.Guard;
 
 namespace IPWebService.Services
 {
-    public class GeoliteClient : IGeoliteClient
+    public class GeoliteHttpClient : IGeoliteHttpClient
     {
         private readonly HttpClient httpClient;
         private readonly GeoliteUrlOptions geoliteUrl;
         private const string geoliteDbFileName = "geolite.tar.gz";
 
 
-        public GeoliteClient(HttpClient httpClient, 
+        public GeoliteHttpClient(HttpClient httpClient, 
                              IOptionsSnapshot<GeoliteUrlOptions> optionsSnapshot)
         {
             if (optionsSnapshot.Value is null)
@@ -32,7 +33,7 @@ namespace IPWebService.Services
         /// </summary>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public async Task<string> PullGeoliteDataBase(string destinationPath)
+        public async Task<string> PullGeoliteDataBaseArchive(string destinationPath)
         {
             if (string.IsNullOrEmpty(destinationPath))
                 NullArgument.Throw(nameof(destinationPath));
@@ -60,5 +61,6 @@ namespace IPWebService.Services
 
             return geoliteDbPath;
         }
+
     }
 }

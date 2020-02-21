@@ -1,6 +1,7 @@
 using IPWebService.Options;
 using IPWebService.Persistence;
 using IPWebService.Services;
+using IPWebService.Services.Geolite;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace IPWebService
             #region Configure GeoliteClient
 
          
-            services.AddHttpClient<IGeoliteClient, GeoliteClient>();
+            services.AddHttpClient<IGeoliteHttpClient, GeoliteHttpClient>();
 
             services.Configure<GeoliteUrlOptions>(dbOps =>
                 Configuration.GetSection("GeoliteUrlOptions").Bind(dbOps));
