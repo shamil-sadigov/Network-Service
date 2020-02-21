@@ -10,9 +10,10 @@ C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.csprojAssemblyReference.cache
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\staticwebassets\IPWebService.StaticWebAssets.Manifest.cache
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\staticwebassets\IPWebService.StaticWebAssets.xml
-C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.AssemblyInfoInputs.cache
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.AssemblyInfo.cs
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.RazorTargetAssemblyInfo.cache
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.pdb
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.csproj.CopyComplete
