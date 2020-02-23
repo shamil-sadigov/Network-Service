@@ -42,7 +42,7 @@ namespace IPWebService.Test
             // will create if does not exists & won't create if exist
             Directory.CreateDirectory(testDirectory);
             
-            string geoliteDbpath = await geoliteClient.PullGeoliteDataBaseArchive(testDirectory);
+            string geoliteDbpath = await geoliteClient.PullGeoliteDataBase(testDirectory);
 
             Assert.True(geoliteDbpath!=null, "Geolite db file path should not be null");
             Assert.True(geoliteDbpath.Contains(testDirectory), "DB file path should be in our specified destination directory");
@@ -61,7 +61,7 @@ namespace IPWebService.Test
         {
             try
             {
-                string geoliteDbpath = await geoliteClient.PullGeoliteDataBaseArchive(null);
+                string geoliteDbpath = await geoliteClient.PullGeoliteDataBase(null);
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace IPWebService.Test
 
             try
             {
-                string geoliteDbpath = await geoliteClient.PullGeoliteDataBaseArchive("...");
+                string geoliteDbpath = await geoliteClient.PullGeoliteDataBase("...");
             }
             catch (Exception ex)
             {

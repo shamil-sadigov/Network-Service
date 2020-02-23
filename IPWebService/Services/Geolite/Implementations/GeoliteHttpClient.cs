@@ -33,7 +33,7 @@ namespace IPWebService.Services
         /// </summary>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public async Task<string> PullGeoliteDataBaseArchive(string destinationPath)
+        public async Task<string> PullGeoliteDataBase(string destinationPath)
         {
             if (string.IsNullOrEmpty(destinationPath))
                 NullArgument.Throw(nameof(destinationPath));
@@ -56,11 +56,10 @@ namespace IPWebService.Services
                     fileStream.Write(buffer, 0, buffer.Length);
                 }
                 else
-                    throw new HttpRequestException("HttpClient returned invalid invalid content. Gzip expected");
+                    throw new HttpRequestException("HttpClient returned invalid content. Gzip expected");
             }
 
             return geoliteDbPath;
         }
-
     }
 }

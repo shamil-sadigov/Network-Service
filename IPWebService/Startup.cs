@@ -38,6 +38,7 @@ namespace IPWebService
 
             services.AddTransient<IConnectionStringBuilder, PostgreConnStringBuilder>();
             services.AddTransient<IConnectionStringManager, PostgreConnStringManager>();
+            services.AddTransient<IGeoliteFileService, GeoliteFileService>();
 
             // you may initialize your serlf injecting necessary dependencies later
             services.AddHostedService<GeoliteHostedService>();

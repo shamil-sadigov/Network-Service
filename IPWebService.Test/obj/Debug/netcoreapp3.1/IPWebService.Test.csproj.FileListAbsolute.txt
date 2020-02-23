@@ -387,3 +387,4 @@ C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService.Test\bin\Debug\netcoreap
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService.Test\bin\Debug\netcoreapp3.1\System.Text.Json.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService.Test\obj\Debug\netcoreapp3.1\IPWebService.Test.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService.Test\obj\Debug\netcoreapp3.1\IPWebService.Test.pdb
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService.Test\bin\Debug\netcoreapp3.1\ICSharpCode.SharpZipLib.dll

@@ -14,11 +14,11 @@ namespace IPWebService.Services.Geolite
                 NullArgument.Throw(nameof(gzipPath));
 
             if (!File.Exists(gzipPath))
-                throw new FileNotFoundException($"Following file was not found {gzipPath}");
+                throw new FileNotFoundException($"File was not found {gzipPath}");
 
             var gzipFileInfo = new FileInfo(gzipPath);
 
-            // just crop filename from "geolite.tar.gz" to "geolite.tar"
+            // Just crop filename. Example, from "geolite.tar.gz" to "geolite.tar"
             string decompressedFileName = gzipFileInfo.FullName.Remove
                                           (gzipFileInfo.FullName.Length - gzipFileInfo.Extension.Length);
 
@@ -47,7 +47,7 @@ namespace IPWebService.Services.Geolite
             var archiveInfo = new FileInfo(archivePath);
 
             // Dir where we would like to extract our archive to
-            string directoryToExtractArhive = Path.Combine(archiveInfo.DirectoryName, "Geolite Extract Folder");
+            string directoryToExtractArhive = Path.Combine(archiveInfo.DirectoryName, "GeoliteDb_Extract_Folder");
             string directoryToPutDbFile = archiveInfo.DirectoryName;
 
 
@@ -57,7 +57,6 @@ namespace IPWebService.Services.Geolite
 
             if (deleteArchive)
                 File.Delete(archivePath);
-
 
 
             var extractedArchive = new DirectoryInfo(directoryToExtractArhive);
@@ -75,6 +74,9 @@ namespace IPWebService.Services.Geolite
 
             string geoliteDatabaseNewPath = Path.Combine(directoryToPutDbFile, geoliteDatabase.Name);
             geoliteDatabase.MoveTo(geoliteDatabaseNewPath);
+
+            // delete extracted folder
+            Directory.Delete(directoryToExtractArhive);
 
             return geoliteDatabaseNewPath;
         }

@@ -37,7 +37,6 @@ namespace IPWebService.Test
         [Fact(DisplayName = "InMemoryCollection of IConfiguration works correctly")]
         public void InMemoryCollectionShouldWorkCorrectly()
         {
-
             string newConnString = "Assume I'm connectionString";
             configuration["ConnectionStrings:Postgre"] = newConnString;
             var connString = configuration.GetConnectionString("Postgre");

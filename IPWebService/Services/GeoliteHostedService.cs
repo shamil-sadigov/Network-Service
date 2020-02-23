@@ -15,7 +15,6 @@ namespace IPWebService.Services
         }
 
 
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
