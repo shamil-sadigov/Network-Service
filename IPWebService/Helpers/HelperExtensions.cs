@@ -1,17 +1,14 @@
 ﻿using IPWebService.Models.DTO;
 using IPWebService.Persistence;
 using NpgsqlTypes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using static MaxMind.Db.Reader;
 
 namespace IPWebService.Helpers
 {
     public static class HelperExtensions
     {
-        public static IEnumerable<GeoObject> Map(this IEnumerable<ReaderIteratorNode<GeoliteDTO>> dtoList)
+        public static IEnumerable<GeoObject> MapToGeoObjects(this IEnumerable<ReaderIteratorNode<GeoliteDTO>> dtoList)
         {
             foreach (var dto in dtoList)
                 yield return new GeoObject()

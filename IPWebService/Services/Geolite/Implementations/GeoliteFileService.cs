@@ -73,10 +73,10 @@ namespace IPWebService.Services.Geolite
                 throw new FileLoadException($"No file of type .mmdb has been found {extractedArchive}");
 
             string geoliteDatabaseNewPath = Path.Combine(directoryToPutDbFile, geoliteDatabase.Name);
-            geoliteDatabase.MoveTo(geoliteDatabaseNewPath);
+            geoliteDatabase.MoveTo(geoliteDatabaseNewPath, overwrite: true);
 
             // delete extracted folder
-            Directory.Delete(directoryToExtractArhive);
+            Directory.Delete(directoryToExtractArhive, true);
 
             return geoliteDatabaseNewPath;
         }

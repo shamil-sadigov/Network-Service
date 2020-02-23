@@ -37,7 +37,7 @@ namespace IPWebService.Test
         [Fact(DisplayName = "IConnectionStringManager build connectionstring ")]
         public void IConnectionStringManagerBuildsNewConnectionString()
         {
-            string connectionstring = connStringManager.GenerateConnectionString(dbOptions);
+            string connectionstring = connStringManager.GenerateNewConnectionString(dbOptions);
 
             Assert.True(connectionstring != null, "Connection string should not be null");
             Assert.True(connectionstring.Contains("Database"), "Connection string should contain Database name");

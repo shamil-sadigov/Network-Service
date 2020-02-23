@@ -23,31 +23,29 @@ namespace IPWebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            #region Configure GeoliteClient
+            #region Configure Geolite services
 
-         
             services.AddHttpClient<IGeoliteHttpClient, GeoliteHttpClient>();
 
             services.Configure<GeoliteUrlOptions>(dbOps =>
                 Configuration.GetSection("GeoliteUrlOptions").Bind(dbOps));
 
-            #endregion
-
-
-
-
-            services.AddDbContext<ApplicationContext>((serviceProvider, dbOptions)=>
-            {
-                var connStringManager = serviceProvider.GetRequiredService<IConnectionStringManager>();
-                dbOptions.UseNpgsql(connStringManager.CurrentConnectionString);
-            });
-
-
-
 
             services.AddTransient<IConnectionStringBuilder, PostgreConnStringBuilder>();
             services.AddTransient<IConnectionStringManager, PostgreConnStringManager>();
             services.AddTransient<IGeoliteFileService, GeoliteFileService>();
+            services.AddTransient<IGeoliteManager, GeoliteManager>();
+
+
+            #endregion
+
+            services.AddDbContext<ApplicationContext>((serviceProvider, dbBuilder) =>
+            {
+                var appDbOptions = Configuration.GetSection("DbOptions:Postgre").Get<AppDbOptions>();
+                var connStringManager = serviceProvider.GetRequiredService<IConnectionStringManager>();
+                connStringManager.ConnectionString ??= connStringManager.GenerateNewConnectionString(appDbOptions);
+                dbBuilder.UseNpgsql(connStringManager.ConnectionString);
+            });
 
             // you may initialize your serlf injecting necessary dependencies later
             services.AddHostedService<GeoliteHostedService>();

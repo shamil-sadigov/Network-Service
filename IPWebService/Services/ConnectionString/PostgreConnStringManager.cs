@@ -18,7 +18,7 @@ namespace IPWebService.Services
             this.connectionStringBuilder = connectionStringBuilder;
         }
 
-        public string CurrentConnectionString
+        public string ConnectionString
         {
             get => configuration.GetConnectionString("Postgre");
             set 
@@ -31,7 +31,7 @@ namespace IPWebService.Services
         }
             
 
-        public string GenerateConnectionString(AppDbOptions ops)
+        public string GenerateNewConnectionString(AppDbOptions ops)
         {
             if (ops.IsNull())
                 NullArgument.Throw(argument: nameof(AppDbOptions));
