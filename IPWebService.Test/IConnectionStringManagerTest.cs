@@ -32,44 +32,12 @@ namespace IPWebService.Test
 
 
 
-        [Fact(DisplayName = "IConnectionStringManager set valid connectionString")]
-        public void IConnectionStringManagerSetValidConnectionString()
-        {
-            string connString = "connectionString...";
-            connStringManager.SetConnectionString(connString);
-            Assert.True(connStringManager.CurrentConnectionString == connString, "Connection string should be assinged");
-        }
-
-
-        [Fact(DisplayName = "IConnectionStringManager throw Exception when setting invalid connectionString")]
-        public void IConnectionStringManagerThrowExceptionWhenSettingInvalidConnString()
-        {
-            try
-            {
-                connStringManager.SetConnectionString("");
-            }
-            catch (Exception ex)
-            {
-                Assert.True(ex is ArgumentNullException, "ArgumentNullException should be thrown");
-            }
-
-
-            try
-            {
-                connStringManager.SetConnectionString(null);
-            }
-            catch (Exception ex)
-            {
-                Assert.True(ex is ArgumentNullException, "ArgumentNullException should be thrown");
-            }
-        }
-
 
 
         [Fact(DisplayName = "IConnectionStringManager build connectionstring ")]
         public void IConnectionStringManagerBuildsNewConnectionString()
         {
-            string connectionstring = connStringManager.NewConnectionString(dbOptions);
+            string connectionstring = connStringManager.GenerateConnectionString(dbOptions);
 
             Assert.True(connectionstring != null, "Connection string should not be null");
             Assert.True(connectionstring.Contains("Database"), "Connection string should contain Database name");

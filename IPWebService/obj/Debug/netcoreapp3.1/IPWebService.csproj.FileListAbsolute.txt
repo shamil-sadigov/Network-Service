@@ -33,4 +33,7 @@ C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\ICSharpCode.SharpZipLib.dll
-C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\MaxMind.Db.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Npgsql.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll

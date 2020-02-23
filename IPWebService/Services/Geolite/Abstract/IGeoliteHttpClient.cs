@@ -10,6 +10,6 @@ namespace IPWebService.Services
         /// </summary>
         /// <param name="destinationPath">Directory where DB file is goind to be saved in</param>
         /// <returns>Path to DB archive gzip compressed </returns>
-        Task<string> PullGeoliteDataBase(string destinationPath);
+        Task<string> PullGeoliteDataBaseAsync(string destinationPath);
     }
 }

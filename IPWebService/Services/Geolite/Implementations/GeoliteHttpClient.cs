@@ -33,7 +33,7 @@ namespace IPWebService.Services
         /// </summary>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public async Task<string> PullGeoliteDataBase(string destinationPath)
+        public async Task<string> PullGeoliteDataBaseAsync(string destinationPath)
         {
             if (string.IsNullOrEmpty(destinationPath))
                 NullArgument.Throw(nameof(destinationPath));

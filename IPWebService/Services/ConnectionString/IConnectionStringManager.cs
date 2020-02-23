@@ -11,18 +11,13 @@ namespace IPWebService.Services
         /// <summary>
         /// Returns current connection string from IConfiguration
         /// </summary>
-        string CurrentConnectionString { get; }
+        string CurrentConnectionString { get; set; }
 
         /// <summary>
         /// Generates connection string for new database
         /// </summary>
         /// <returns></returns>
-        string NewConnectionString(AppDbOptions options);
+        string GenerateConnectionString(AppDbOptions options);
 
-        /// <summary>
-        /// Set specified connectionstring in IConfiguration
-        /// </summary>
-        /// <param name="connectionString"></param>
-        void SetConnectionString(string connectionString);
     }
 }

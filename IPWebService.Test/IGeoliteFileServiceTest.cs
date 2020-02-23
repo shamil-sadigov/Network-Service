@@ -119,7 +119,7 @@ namespace IPWebService.Test
             // will create if does not exists & won't create if exist
             Directory.CreateDirectory(testDirectory);
 
-            string geoliteDbGzipPath = await geoliteClient.PullGeoliteDataBase(testDirectory);
+            string geoliteDbGzipPath = await geoliteClient.PullGeoliteDataBaseAsync(testDirectory);
 
             return geoliteDbGzipPath;
         }

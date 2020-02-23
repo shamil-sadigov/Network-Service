@@ -33,7 +33,16 @@ namespace IPWebService
 
             #endregion
 
-            //services.AddDbContext<ApplicationContext>(ops => ops = null);
+
+
+
+            services.AddDbContext<ApplicationContext>((serviceProvider, dbOptions)=>
+            {
+                var connStringManager = serviceProvider.GetRequiredService<IConnectionStringManager>();
+                dbOptions.UseNpgsql(connStringManager.CurrentConnectionString);
+            });
+
+
 
 
             services.AddTransient<IConnectionStringBuilder, PostgreConnStringBuilder>();

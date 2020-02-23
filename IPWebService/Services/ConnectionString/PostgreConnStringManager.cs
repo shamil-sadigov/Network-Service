@@ -18,25 +18,25 @@ namespace IPWebService.Services
             this.connectionStringBuilder = connectionStringBuilder;
         }
 
-        public string CurrentConnectionString =>
-            configuration.GetConnectionString("Postgre");
+        public string CurrentConnectionString
+        {
+            get => configuration.GetConnectionString("Postgre");
+            set 
+            {
+                if (string.IsNullOrEmpty(value))
+                    NullArgument.Throw(argument: nameof(AppDbOptions));
 
-        public string NewConnectionString(AppDbOptions ops)
+                configuration["ConnectionStrings:Postgre"] = value;
+            }
+        }
+            
+
+        public string GenerateConnectionString(AppDbOptions ops)
         {
             if (ops.IsNull())
                 NullArgument.Throw(argument: nameof(AppDbOptions));
 
             return connectionStringBuilder.Build(ops, $"Geolite_{DateTime.Now.Ticks}");
         }
-
-
-        public void SetConnectionString(string connectionString)
-        {
-            if (string.IsNullOrEmpty(connectionString))
-                NullArgument.Throw(argument: nameof(AppDbOptions));
-
-            configuration["ConnectionStrings:Postgre"] = connectionString;
-        }
-
     }
 }
