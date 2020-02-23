@@ -21,7 +21,7 @@ namespace IPWebService.Services.Geolite
             => (httpClient, fileService) = (geoliteHttpClient, geoliteFileService);
        
 
-        public async Task<string> InstallDbFileAsync(string directoryPath)
+        public async Task<string> DownloadDbFileAsync(string directoryPath)
         {
             string databaseFileGzip = await httpClient.PullGeoliteDataBaseAsync(directoryPath);
             string databaseArchive = fileService.DecompressGzip(databaseFileGzip);
@@ -38,12 +38,7 @@ namespace IPWebService.Services.Geolite
             if (!File.Exists(geoliteDbFile))
                 throw new FileNotFoundException($"Db file not found {geoliteDbFile}");
 
-            if (!await dbContext.Database.CanConnectAsync())
-                throw new Exception("Cannot connect to database");
-
-            await dbContext.Database.EnsureCreatedAsync();
-
-
+        
             using (var reader = new Reader(geoliteDbFile))
             {
                 var dtoObjects = reader.FindAll<GeoliteDTO>();

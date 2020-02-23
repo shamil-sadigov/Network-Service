@@ -17,7 +17,7 @@ namespace IPWebService.Services
         /// Generates connection string for new database
         /// </summary>
         /// <returns></returns>
-        string GenerateNewConnectionString(AppDbOptions options);
+        string GenerateNewConnectionString();
 
     }
 }

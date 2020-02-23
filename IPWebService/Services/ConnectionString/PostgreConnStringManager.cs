@@ -1,4 +1,5 @@
-﻿using IPWebService.Persistence;
+﻿using IPWebService.Helpers;
+using IPWebService.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System;
@@ -10,33 +11,48 @@ namespace IPWebService.Services
     {
         private readonly IConfiguration configuration;
         private readonly IConnectionStringBuilder connectionStringBuilder;
+        private readonly AppDbOptions dbConnectionOptions;
 
         public PostgreConnStringManager(IConfiguration configuration,
-                                        IConnectionStringBuilder connectionStringBuilder)
+                                        IConnectionStringBuilder connectionStringBuilder,
+                                        IOptionsSnapshot<AppDbOptions> optionsSnapshot)
         {
             this.configuration = configuration;
             this.connectionStringBuilder = connectionStringBuilder;
+            dbConnectionOptions = optionsSnapshot.Value;
         }
 
         public string ConnectionString
         {
-            get => configuration.GetConnectionString("Postgre");
+            get
+            {
+                string currentConnString = configuration.GetAppConnectionString();
+
+                if (string.IsNullOrEmpty(currentConnString))
+                {
+                    string newConnString = connectionStringBuilder.Build(dbConnectionOptions, dbName: "Geolite Initial");
+                    configuration.SetConnectionString(newConnString);
+                    currentConnString = newConnString;
+                }
+
+                return currentConnString;
+            } 
             set 
             {
                 if (string.IsNullOrEmpty(value))
                     NullArgument.Throw(argument: nameof(AppDbOptions));
 
-                configuration["ConnectionStrings:Postgre"] = value;
+                configuration.SetConnectionString(value);
             }
         }
             
 
-        public string GenerateNewConnectionString(AppDbOptions ops)
+        public string GenerateNewConnectionString()
         {
-            if (ops.IsNull())
-                NullArgument.Throw(argument: nameof(AppDbOptions));
+            if (dbConnectionOptions.IsNull())
+                NullArgument.Throw(argument: nameof(dbConnectionOptions));
 
-            return connectionStringBuilder.Build(ops, $"Geolite_{DateTime.Now.Ticks}");
+            return connectionStringBuilder.Build(dbConnectionOptions, $"Geolite_{DateTime.Now.Ticks}");
         }
     }
 }

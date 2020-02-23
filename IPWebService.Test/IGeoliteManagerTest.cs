@@ -42,11 +42,13 @@ namespace IPWebService.Test
 
             Directory.CreateDirectory(testDirectory);
 
-            string dbFilePath = await geoliteManager.InstallDbFileAsync(testDirectory);
+            string dbFilePath = await geoliteManager.DownloadDbFileAsync(testDirectory);
 
             Assert.True(dbFilePath != null, "Geolite db file path should not be null");
             Assert.True(dbFilePath.Contains(testDirectory), "DB file path should be in our specified destination directory");
             Assert.True(File.Exists(dbFilePath), "Geolite DB should exist");
+
+            Directory.Delete(testDirectory, true);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace IPWebService.Test
         [Fact(DisplayName = "IConnectionStringManager build connectionstring ")]
         public void IConnectionStringManagerBuildsNewConnectionString()
         {
-            string connectionstring = connStringManager.GenerateNewConnectionString(dbOptions);
+            string connectionstring = connStringManager.GenerateNewConnectionString();
 
             Assert.True(connectionstring != null, "Connection string should not be null");
             Assert.True(connectionstring.Contains("Database"), "Connection string should contain Database name");
@@ -45,6 +45,19 @@ namespace IPWebService.Test
             Assert.True(connectionstring.Contains(dbOptions.Password), "Connection string should contain Password");
             Assert.True(connectionstring.Contains(dbOptions.Port.ToString()), "Connection string should contain Port");
             Assert.True(connectionstring.Contains(dbOptions.UserName), "Connection string should contain UserName");
+        }
+
+
+
+
+
+        [Fact(DisplayName = "IConnectionStringManager build connectionstring ")]
+        public void IConnectionStringManagerConnectionStringShouldNOtBeNull()
+        {
+            string connectionstring = connStringManager.ConnectionString;
+
+            Assert.True(connectionstring != null, "ConnectionString should not be null");
+
         }
     }
 }

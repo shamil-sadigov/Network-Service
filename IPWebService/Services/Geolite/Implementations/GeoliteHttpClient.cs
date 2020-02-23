@@ -24,7 +24,7 @@ namespace IPWebService.Services
 
             this.httpClient = httpClient;
             geoliteUrl = optionsSnapshot.Value;
-
+            
 
         }
 
