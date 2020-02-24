@@ -7,12 +7,12 @@
 - Должны быть установлены .NET Core 3.1 SDK, PostgreSQL
 - Должны быть указаны опции для подключения к базе данных PostgreSql appsettings.json
 
-![DbOptions](./Docs/dbOptions.png)
+![DbOptions](https://raw.githubusercontent.com/ShamilMS/Network-Service/master/IPWebService/Docs/dbOptions.PNG)
 
 - Строку подключения добавлять не надо, строка подключения будет динамически добавляться приложением 
 основывась на указанные вами опции для подключенияя
 
-![DbOptions](./Docs/connString.png)
+![DbOptions](https://raw.githubusercontent.com/ShamilMS/Network-Service/master/IPWebService/Docs/connString.png)
 
 
 
