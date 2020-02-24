@@ -18,18 +18,7 @@ namespace IPWebService
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(builder =>
-                {
-                    var memoryCollection = new Dictionary<string, string>()
-                    {
-                        {"ConnectionStrings:Postgre", null}
-                    };
-
-                    builder.AddInMemoryCollection(memoryCollection);
-                })
                 .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    webBuilder.UseStartup<Startup>());
     }
 }

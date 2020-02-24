@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using static IPWebService.Helpers.Guard;
 
@@ -38,7 +39,6 @@ namespace IPWebService.Services.Geolite
             if (!File.Exists(geoliteDbFile))
                 throw new FileNotFoundException($"Db file not found {geoliteDbFile}");
 
-        
             using (var reader = new Reader(geoliteDbFile))
             {
                 var dtoObjects = reader.FindAll<GeoliteDTO>();
@@ -49,7 +49,7 @@ namespace IPWebService.Services.Geolite
                 {
                     try
                     {
-                        await dbContext.BulkInsertAsync(models.Take(10000), ops => ops.BatchSize = 5000);
+                        await dbContext.BulkInsertAsync(models, ops => ops.BatchSize = 100000);
                         await transaction.CommitAsync();
                     } 
                     catch (Exception ex)
@@ -58,7 +58,6 @@ namespace IPWebService.Services.Geolite
                     }
                 }
                
-                Console.Read();
             }
         }
     }

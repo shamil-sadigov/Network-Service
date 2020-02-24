@@ -47,4 +47,11 @@ C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\bin\Debug\netcoreapp3.1\IPWebService.xml
+C:\Users\sovsh\Desktop\Hybrid\IPWebService\IPWebService\obj\Debug\netcoreapp3.1\IPWebService.xml

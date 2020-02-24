@@ -1,3 +1,4 @@
+using IPWebService.Helpers;
 using IPWebService.Options;
 using IPWebService.Persistence;
 using IPWebService.Services;
@@ -26,28 +27,29 @@ namespace IPWebService
         {
             services.AddHostedService<GeoliteHostedService>();
 
-
             #region Configure Geolite services
 
             services.AddHttpClient<IGeoliteHttpClient, GeoliteHttpClient>();
 
             services.Configure<GeoliteUrlOptions>(dbOps =>
                 Configuration.GetSection("GeoliteUrlOptions").Bind(dbOps));
-
             
             services.AddTransient<IConnectionStringBuilder, ConnectionStringBuilder>();
             services.AddTransient<IConnectionStringManager, ConnectionStringManager>();
             services.AddTransient<IGeoliteFileService, GeoliteFileService>();
             services.AddTransient<IGeoliteManager, GeoliteManager>();
-
+            services.AddScoped<GeoRepository>();
 
             #endregion
 
             services.AddDbContext<ApplicationContext>((serviceProvider, dbBuilder) =>
             {
                 var connStringManager = serviceProvider.GetRequiredService<IConnectionStringManager>();
-                dbBuilder.UseNpgsql(connStringManager.ConnectionString);
 
+                if (string.IsNullOrEmpty(connStringManager.ConnectionString))
+                    connStringManager.ConnectionString = connStringManager.GenerateNewConnectionString();
+
+                dbBuilder.UseNpgsql(connStringManager.ConnectionString);
 
                 // this requirement is for Z.EntitFramework library since we use Bulk Insert
                 // it's seems strange, but it required in documentation
@@ -58,10 +60,10 @@ namespace IPWebService
             });
 
             // you may initialize your serlf injecting necessary dependencies later
-
             services.Configure<AppDbOptions>(dbOps =>
                 Configuration.GetSection("DbOptions:Postgre").Bind(dbOps));
 
+            services.AddSwagger();
             services.AddControllers();
         }
 
@@ -72,6 +74,13 @@ namespace IPWebService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 

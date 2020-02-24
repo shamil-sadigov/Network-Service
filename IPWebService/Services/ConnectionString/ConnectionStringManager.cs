@@ -31,7 +31,7 @@ namespace IPWebService.Services
                 if (string.IsNullOrEmpty(value))
                     NullArgument.Throw(argument: nameof(AppDbOptions));
                 
-                configuration.SetConnectionString(value ?? throw new Exception());
+                configuration.SetConnectionString(value);
             }
         }
             

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IPWebService</name>
+    </assembly>
+    <members>
+        <member name="M:IPWebService.Controllers.NetworkController.Get(IPWebService.Models.RequestDto)">
+            <remarks>
+            This action take an ipAddress and returns geographic coordinates 
+            </remarks>
+        </member>
+        <member name="P:IPWebService.Models.DTO.City.Name">
+            <summary>
+            City name in english
+            </summary>
+        </member>
+        <member name="T:IPWebService.Models.GeoliteKeywords">
+            <summary>
+            Geolite related keywords
+            </summary>
+        </member>
+        <member name="P:IPWebService.Services.IConnectionStringManager.ConnectionString">
+            <summary>
+            Returns current connection string from IConfiguration
+            </summary>
+        </member>
+        <member name="M:IPWebService.Services.IConnectionStringManager.GenerateNewConnectionString">
+            <summary>
+            Generates connection string for new database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IPWebService.Services.Geolite.IGeoliteFileService.DecompressGzip(System.String,System.Boolean)">
+            <summary>
+            Decompress specified gzip file and returns archive
+            </summary>
+            <param name="gzipPath">Gzip file that need to be decompressed</param>
+            <param name="deleteGzipFile">Delete gzip file after decompressing or ?...</param>
+            <returns>Returns decompressed archive file path</returns>
+        </member>
+        <member name="M:IPWebService.Services.Geolite.IGeoliteFileService.ExtractDbFileFromArchive(System.String,System.Boolean)">
+            <summary>
+            Extracts db file from archive and return path to dbfile
+            </summary>
+            <param name="archivePath"></param>
+            <returns>Geolite database file path </returns>
+        </member>
+        <member name="M:IPWebService.Services.Geolite.IGeoliteManager.DownloadDbFileAsync(System.String)">
+            <summary>
+            Downloads db file from Geolite web service in specified directory and return path to downloaded database file
+            </summary>
+            <param name="directoryPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IPWebService.Services.Geolite.IGeoliteManager.MigrateToDbContext(System.String,Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Migrates geolite database to specified DbContext
+            </summary>
+            <param name="geoliteDbFile"></param>
+            <param name="dbContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IPWebService.Services.IGeoliteHttpClient.PullGeoliteDataBaseAsync(System.String)">
+            <summary>
+            Pulls geolite db from Maxmind service, saves in specified destination and returns path to DB archive gzip compressed
+            If DB file already exist in destination, then it will be replaced by new DB file
+            </summary>
+            <param name="destinationPath">Directory where DB file is goind to be saved in</param>
+            <returns>Path to DB archive gzip compressed </returns>
+        </member>
+        <member name="M:IPWebService.Services.GeoliteHttpClient.PullGeoliteDataBaseAsync(System.String)">
+            <summary>
+            Comments reagarding this method is specified in interface
+            </summary>
+            <param name="destinationPath"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

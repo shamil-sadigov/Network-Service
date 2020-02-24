@@ -50,14 +50,5 @@ namespace IPWebService.Test
 
 
 
-
-        [Fact(DisplayName = "IConnectionStringManager build connectionstring ")]
-        public void IConnectionStringManagerConnectionStringShouldNOtBeNull()
-        {
-            string connectionstring = connStringManager.ConnectionString;
-
-            Assert.True(connectionstring != null, "ConnectionString should not be null");
-
-        }
     }
 }

@@ -40,16 +40,21 @@ namespace IPWebService.Services
                 // any request can come to our controller we could not get data from DB since 
                 // we haven't craeted DB yet, so it should be sync
 
+
+                // update every 7 days
+                int updateIntervalInMilliseconds = TimeSpan.FromDays(7).Milliseconds; 
                 dbContext.Database.EnsureCreated();
-                
+
                 if (!dbContext.GeoObjects.Any())
                 {
                     FillDatabase();
+
+                    // install timer to UpdateDatabase every 7 days
+                    timer = new Timer(async (obj) => 
+                                       await UpdateDatabaseAsync(), null, updateIntervalInMilliseconds, updateIntervalInMilliseconds);
                 }
                 else
                 {
-                    int updateIntervalInDays = 7; // update every 7 days
-
                     GeoObject geoObject = await dbContext.GeoObjects.FirstOrDefaultAsync();
 
                     DateTime lastUpdateTime = geoObject.UpdateTime;
@@ -61,11 +66,18 @@ namespace IPWebService.Services
 
 
                     if (daysLeft.Days > 0)
-                        timer = new Timer(async (obj) => 
-                                        await UpdateDatabaseAsync(), null, daysLeft.Milliseconds, TimeSpan.FromDays(updateIntervalInDays).Milliseconds);
-                    else
                     {
-                        await UpdateDatabaseAsync();
+                        // install timer to UpdateDatabase when left days will pass and set interval to repeat this action every 7 days
+                        // so we update our DB every week (Wednesday)
+                        timer = new Timer(async (obj) =>                  
+                                        await UpdateDatabaseAsync(), null, daysLeft.Milliseconds, updateIntervalInMilliseconds);
+
+                    }
+                    else
+                    {   // install timer to UpdateDatabase now and set interval to repeat this action every 7 days
+                        // so we update our DB every week (Wednesday)
+                        timer = new Timer(async (obj) =>
+                                       await UpdateDatabaseAsync(), null, 0, updateIntervalInMilliseconds);
                     }
                 }
             }
@@ -97,8 +109,6 @@ namespace IPWebService.Services
                 string geoliteDb = geoliteManager.DownloadDbFileAsync(directory).Result;
                 geoliteManager.MigrateToDbContext(geoliteDb, dbContext).Wait();
             }
-
-
 
 
             async Task UpdateDatabaseAsync()
@@ -142,8 +152,6 @@ namespace IPWebService.Services
                 {
                     await outdatedContext.Database.EnsureDeletedAsync();
                 }
-
-
 
                 #endregion
             }

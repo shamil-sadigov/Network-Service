@@ -10,7 +10,6 @@ namespace IPWebService.Persistence
     {
         public DbSet<GeoObject> GeoObjects { get; set; }
 
-
         public ApplicationContext(DbContextOptions<ApplicationContext> ops) : base(ops)
         {
 
