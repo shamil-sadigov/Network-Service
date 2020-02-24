@@ -36,9 +36,7 @@ namespace IPWebService.Services
                 hostEnvironment = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
                 connectionManager = scope.ServiceProvider.GetRequiredService<IConnectionStringManager>();
 
-                // we should not use async method since if we would await
-                // any request can come to our controller we could not get data from DB since 
-                // we haven't craeted DB yet, so it should be sync
+                
 
 
                 // update every 7 days
