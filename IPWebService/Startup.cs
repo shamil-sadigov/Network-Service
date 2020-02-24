@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Z.EntityFramework.Extensions;
 
 namespace IPWebService
 {
@@ -33,9 +34,9 @@ namespace IPWebService
             services.Configure<GeoliteUrlOptions>(dbOps =>
                 Configuration.GetSection("GeoliteUrlOptions").Bind(dbOps));
 
-
-            services.AddTransient<IConnectionStringBuilder, PostgreConnStringBuilder>();
-            services.AddTransient<IConnectionStringManager, PostgreConnStringManager>();
+            
+            services.AddTransient<IConnectionStringBuilder, ConnectionStringBuilder>();
+            services.AddTransient<IConnectionStringManager, ConnectionStringManager>();
             services.AddTransient<IGeoliteFileService, GeoliteFileService>();
             services.AddTransient<IGeoliteManager, GeoliteManager>();
 
@@ -46,6 +47,14 @@ namespace IPWebService
             {
                 var connStringManager = serviceProvider.GetRequiredService<IConnectionStringManager>();
                 dbBuilder.UseNpgsql(connStringManager.ConnectionString);
+
+
+                // this requirement is for Z.EntitFramework library since we use Bulk Insert
+                // it's seems strange, but it required in documentation
+                EntityFrameworkManager.ContextFactory = context => 
+                        new ApplicationContext(new DbContextOptionsBuilder<ApplicationContext>()
+                                                        .UseNpgsql(connStringManager.ConnectionString)
+                                                        .Options);
             });
 
             // you may initialize your serlf injecting necessary dependencies later

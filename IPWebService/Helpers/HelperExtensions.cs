@@ -23,6 +23,7 @@ namespace IPWebService.Helpers
                     Country = dto.Data.Country?.Name,
                     IPAddress = dto.Start,
                     TimeZone = dto.Data.Location?.TimeZone,
+                    UpdateTime = DateTime.Now,
                     Point = dto.Data.Location == null
                             ? null
                             : new NpgsqlPoint?(dto.Data.Location),
@@ -45,7 +46,7 @@ namespace IPWebService.Helpers
         }
 
 
-        public static string GetAppConnectionString(this IConfiguration configuration)
+        public static string GetConnectionString(this IConfiguration configuration)
         {
             return configuration.GetSection("ConnectionString").Value;
         }

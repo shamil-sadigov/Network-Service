@@ -1,10 +1,10 @@
 ﻿using IPWebService.Persistence;
 using IPWebService.Services.Geolite;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -15,6 +15,11 @@ namespace IPWebService.Services
     public class GeoliteHostedService : BackgroundService
     {
         private readonly IServiceProvider provider;
+        private Timer timer;
+        private ApplicationContext dbContext;
+        private IGeoliteManager geoliteManager;
+        private IWebHostEnvironment hostEnvironment;
+        private IConnectionStringManager connectionManager;
 
         public GeoliteHostedService(IServiceProvider provider)
         {
@@ -26,31 +31,122 @@ namespace IPWebService.Services
         {
             using (var scope = provider.CreateScope())  
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                var geoliteManager = scope.ServiceProvider.GetRequiredService<IGeoliteManager>();
-                var hostEnvironment = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+                dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+                geoliteManager = scope.ServiceProvider.GetRequiredService<IGeoliteManager>();
+                hostEnvironment = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+                connectionManager = scope.ServiceProvider.GetRequiredService<IConnectionStringManager>();
 
-                return;
                 // we should not use async method since if we would await
                 // any request can come to our controller we could not get data from DB since 
                 // we haven't craeted DB yet, so it should be sync
 
                 dbContext.Database.EnsureCreated();
+                
+                if (!dbContext.GeoObjects.Any())
+                {
+                    FillDatabase();
+                }
+                else
+                {
+                    int updateIntervalInDays = 7; // update every 7 days
 
+                    GeoObject geoObject = await dbContext.GeoObjects.FirstOrDefaultAsync();
+
+                    DateTime lastUpdateTime = geoObject.UpdateTime;
+                    DateTime currentTime = DateTime.UtcNow;
+                    DateTime nextUpdateTime = CalculateNextUpdateTime(currentTime);
+                    TimeSpan dayPassed = currentTime - lastUpdateTime;
+                    DateTime dateToUpdate = nextUpdateTime - dayPassed;
+                    TimeSpan daysLeft = dateToUpdate - currentTime;
+
+
+                    if (daysLeft.Days > 0)
+                        timer = new Timer(async (obj) => 
+                                        await UpdateDatabaseAsync(), null, daysLeft.Milliseconds, TimeSpan.FromDays(updateIntervalInDays).Milliseconds);
+                    else
+                    {
+                        await UpdateDatabaseAsync();
+                    }
+                }
+            }
+
+
+            DateTime CalculateNextUpdateTime(DateTime currentTime)
+                         => currentTime.DayOfWeek switch
+                         {
+                             DayOfWeek.Sunday => currentTime + TimeSpan.FromDays(3),
+                             DayOfWeek.Monday => currentTime + TimeSpan.FromDays(2),
+                             DayOfWeek.Tuesday => currentTime + TimeSpan.FromDays(1),
+                             DayOfWeek.Wednesday => currentTime,
+                             DayOfWeek.Thursday => currentTime + TimeSpan.FromDays(6),
+                             DayOfWeek.Friday => currentTime + TimeSpan.FromDays(5),
+                             DayOfWeek.Saturday => currentTime + TimeSpan.FromDays(4),
+                             _ => currentTime
+                         };
+
+            // since we have no data in DB we should not call this method in async mode
+            // because we first should migrate data to our DB and don't let any controller to be able to access DB before we 
+            // so this is why it's better to do it in sync
+            // because we don't want our API work when DB is empty
+            void FillDatabase()
+            {
                 var root = hostEnvironment.ContentRootPath;
                 var directory = Path.Combine(root, "Geolite");
+                Directory.CreateDirectory(directory);
 
-                
-                string geoliteDb = await geoliteManager.DownloadDbFileAsync(directory);
-
-                await geoliteManager.MigrateToDbContext(geoliteDb, dbContext);
-
-
+                string geoliteDb = geoliteManager.DownloadDbFileAsync(directory).Result;
+                geoliteManager.MigrateToDbContext(geoliteDb, dbContext).Wait();
             }
 
 
 
 
+            async Task UpdateDatabaseAsync()
+            {
+                var root = hostEnvironment.ContentRootPath;
+                var directory = Path.Combine(root, "Geolite");
+                Directory.CreateDirectory(directory);
+
+                string geoliteDb = await geoliteManager.DownloadDbFileAsync(directory);
+
+                #region Migrate geoliteDb to new Database
+
+                string newDatabaseConnection = connectionManager.GenerateNewConnectionString();
+
+                var newDbConnectionBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+                newDbConnectionBuilder.UseNpgsql(newDatabaseConnection);
+
+                using (var context = new ApplicationContext(newDbConnectionBuilder.Options))
+                {
+                    await context.Database.EnsureCreatedAsync();
+                    await geoliteManager.MigrateToDbContext(geoliteDb, context);
+                }
+
+                #endregion
+
+
+                // get currentDbConnection so that to delete
+                // because we already created new DB
+                string outdatedConnectionString = connectionManager.ConnectionString;
+
+                // set CurrentConnectionString to our new DB
+                connectionManager.ConnectionString = newDatabaseConnection;
+
+
+                #region Delete outdated Database
+
+                var outdatedDbBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+                outdatedDbBuilder.UseNpgsql(outdatedConnectionString);
+
+                using (var outdatedContext = new ApplicationContext(outdatedDbBuilder.Options))
+                {
+                    await outdatedContext.Database.EnsureDeletedAsync();
+                }
+
+
+
+                #endregion
+            }
 
         }
     }

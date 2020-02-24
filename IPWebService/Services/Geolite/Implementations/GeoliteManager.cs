@@ -49,10 +49,10 @@ namespace IPWebService.Services.Geolite
                 {
                     try
                     {
-                        dbContext.BulkInsert(models.Take(10000), ops => ops.BatchSize = 10000);
+                        await dbContext.BulkInsertAsync(models.Take(10000), ops => ops.BatchSize = 5000);
                         await transaction.CommitAsync();
-                    }
-                    catch (Exception)
+                    } 
+                    catch (Exception ex)
                     {
                         await transaction.RollbackAsync();
                     }
