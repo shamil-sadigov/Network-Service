@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj": {}
+    "c:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj": {
+    "c:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj",
+        "projectUniqueName": "c:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj",
         "projectName": "IPWebService",
-        "projectPath": "C:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj",
+        "projectPath": "c:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\IPWebService.csproj",
         "packagesPath": "C:\\Users\\sovsh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\obj\\",
+        "outputPath": "c:\\Users\\sovsh\\Desktop\\Hybrid\\IPWebService\\IPWebService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
