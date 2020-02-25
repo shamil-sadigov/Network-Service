@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace IPWebService.Services
 {
+    // Service responsible for:
+    // - migration MaxMind database to PostgreSQL
+    // - update PostgreSQL database on schedule
     public class GeoliteHostedService : BackgroundService
     {
         private readonly IServiceProvider provider;
